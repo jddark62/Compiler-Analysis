@@ -99,3 +99,7 @@ int main() {
     fclose(file);
     return 0;
 }
+
+
+//make changes such that statements under the printf function get identified as either strings or characters depending on ' or "
+
