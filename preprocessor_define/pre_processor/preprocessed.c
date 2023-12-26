@@ -5,6 +5,7 @@
 #define MAX_MACRO_NAME_LENGTH 100
 #define MAX_MACRO_VALUE_LENGTH 100
 
+// structure to store macro name and value
 typedef struct {
     char name[MAX_MACRO_NAME_LENGTH];
     char value[MAX_MACRO_VALUE_LENGTH];
@@ -13,6 +14,7 @@ typedef struct {
 Macro macros[MAX_LINE_LENGTH];
 int numMacros = 0;
 
+// preprocesses the given file and prints the processed output to stdout
 void preprocessFile(const char* filePath) {
     FILE* inputFile = fopen(filePath, "r");
     if (inputFile == NULL) {
@@ -35,7 +37,7 @@ void preprocessFile(const char* filePath) {
                 strcpy(macro.value, macroValue);
                 macros[numMacros++] = macro;
             }
-        } else {
+        } else { // line is not a preprocessor directive
             char processedLine[MAX_LINE_LENGTH];
             strcpy(processedLine, line);
             for (int i = 0; i < numMacros; i++) {
@@ -63,4 +65,3 @@ int main() {
     preprocessFile("input.c");
     return 0;
 }
-
