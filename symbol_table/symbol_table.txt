@@ -1,0 +1,46 @@
+Construct symbol table from multiple object programs.
+Example:
+Input object programs
+H_Prog1_001000_1E
+D_A1_1010_A2_101C_A3_1020
+R_B1_C1
+T_...........................
+M_.....................
+E_001000
+
+
+H_Prog2_001000_1E
+D_B1_101A_B2_101D_B3_1024
+R_A1_C3
+T_...........................
+M_.....................
+E_001000
+
+
+H_Prog3_001000_1E
+D_C1_2000_C2_201C_C3_2021
+R_A1_B1_B2
+T_...........................
+M_.....................
+E_001000
+
+Symbol table needed in this format:
+Symbol Assembler starting address Address of Symbol Runtime starting address Address of Symbol Referred in
+
+Referred in corresponds to symbols referred in other programs
+Use regEx to find patterns in different object programs.
+
+For example:
+Symbol A1
+Assembler starting address Program1 1000
+Address of symbol 1010
+Runtime starting address Random (6000)
+Address of symbol  6010
+Referred in Program2 and Program3
+
+Symbol A2
+Assembler starting address Program1 1000
+Address of symbol 101C
+Runtime starting address Random (6000)
+Address of symbol  601C
+Referred in None

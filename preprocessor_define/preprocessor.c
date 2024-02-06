@@ -14,11 +14,18 @@ typedef struct {
 Macro macros[MAX_LINE_LENGTH];
 int numMacros = 0;
 
-// preprocesses the given file and prints the processed output to stdout
-void preprocessFile(const char* filePath) {
-    FILE* inputFile = fopen(filePath, "r");
+// preprocesses the given file and saves the processed output to a file
+void preprocessFile(const char* inputFilePath, const char* outputFilePath) {
+    FILE* inputFile = fopen(inputFilePath, "r");
     if (inputFile == NULL) {
-        printf("Error opening file: %s\n", filePath);
+        printf("Error opening file: %s\n", inputFilePath);
+        return;
+    }
+
+    FILE* outputFile = fopen(outputFilePath, "w");
+    if (outputFile == NULL) {
+        printf("Error opening file: %s\n", outputFilePath);
+        fclose(inputFile);
         return;
     }
 
@@ -28,7 +35,7 @@ void preprocessFile(const char* filePath) {
             char directive[MAX_MACRO_NAME_LENGTH];
             char macroName[MAX_MACRO_NAME_LENGTH];
             char macroValue[MAX_MACRO_VALUE_LENGTH];
-            //sscanf is used instead of strtok because the macro value may contain spaces
+            // sscanf is used instead of strtok because the macro value may contain spaces
             sscanf(line, "#%s %s %s", directive, macroName, macroValue);
 
             if (strcmp(directive, "define") == 0) {
@@ -39,6 +46,7 @@ void preprocessFile(const char* filePath) {
             }
         } else { // line is not a preprocessor directive
             char processedLine[MAX_LINE_LENGTH];
+            // processedLine is initialized with line because processedLine may be shorter than line
             strcpy(processedLine, line);
             for (int i = 0; i < numMacros; i++) {
                 Macro macro = macros[i];
@@ -54,14 +62,17 @@ void preprocessFile(const char* filePath) {
                     macroOccurrence = strstr(macroOccurrence + valueLength, macro.name);
                 }
             }
-            printf("%s", processedLine);
+            // fprintf is used to print the processed line to the output file
+            fprintf(outputFile, "%s", processedLine);
         }
     }
 
     fclose(inputFile);
+    fclose(outputFile);
 }
 
 int main() {
-    preprocessFile("input.c");
+    preprocessFile("input.c", "output.c");
     return 0;
 }
+
