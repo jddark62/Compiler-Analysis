@@ -361,3 +361,4 @@ if __name__ == "__main__":
     fa = compute_regex(et)
     arrange_nfa(fa)
     output_nfa()
+
