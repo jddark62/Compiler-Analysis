@@ -1,0 +1,7 @@
+shift reduce parser
+bottom up parser
+top down parser:
+recursive descent
+predictive parsing
+left recursion removal 
+left factoring

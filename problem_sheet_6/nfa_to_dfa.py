@@ -1,3 +1,8 @@
+"""
+This script converts a given NFA (Non-Deterministic Finite Automaton) to a DFA (Deterministic Finite Automaton).
+It defines functions to compute the epsilon closure, compute the next state, and convert the NFA to DFA.
+"""
+
 # Define the NFA transitions
 nfa_transitions = {
     'q0': {'a': {'q1'}, 'ε': {'q2'}},
@@ -72,7 +77,22 @@ for state, transitions in dfa_transitions.items():
     print(f"{state}: {transitions}")
 print("DFA Initial State:", dfa_initial_state)
 print("DFA Final States:", dfa_final_states)
+
+
 def convert_nfa_to_dfa(nfa_transitions, nfa_initial_state, nfa_final_states):
+    """
+    Converts a given NFA to a DFA.
+
+    Parameters:
+    - nfa_transitions (dict): The transitions of the NFA.
+    - nfa_initial_state (str): The initial state of the NFA.
+    - nfa_final_states (set): The set of final states of the NFA.
+
+    Returns:
+    - dfa_transitions (dict): The transitions of the DFA.
+    - dfa_initial_state (frozenset): The initial state of the DFA.
+    - dfa_final_states (set): The set of final states of the DFA.
+    """
     dfa_transitions = {}
     dfa_initial_state = frozenset([nfa_initial_state])
     dfa_final_states = set()
@@ -99,7 +119,18 @@ def convert_nfa_to_dfa(nfa_transitions, nfa_initial_state, nfa_final_states):
 
     return dfa_transitions, dfa_initial_state, dfa_final_states
 
+
 def compute_epsilon_closure(states, transitions):
+    """
+    Computes the epsilon closure of a given set of states in an NFA.
+
+    Parameters:
+    - states (set): The set of states.
+    - transitions (dict): The transitions of the NFA.
+
+    Returns:
+    - epsilon_closure (set): The epsilon closure of the given set of states.
+    """
     epsilon_closure = set(states)
     stack = list(epsilon_closure)
 
@@ -114,7 +145,19 @@ def compute_epsilon_closure(states, transitions):
 
     return epsilon_closure
 
+
 def compute_next_state(states, symbol, transitions):
+    """
+    Computes the next state given a set of states, an input symbol, and the transitions of an NFA.
+
+    Parameters:
+    - states (set): The set of states.
+    - symbol (str): The input symbol.
+    - transitions (dict): The transitions of the NFA.
+
+    Returns:
+    - next_state (set): The set of next states.
+    """
     next_state = set()
 
     for state in states:
@@ -124,6 +167,7 @@ def compute_next_state(states, symbol, transitions):
     epsilon_closure = compute_epsilon_closure(next_state, transitions)
 
     return epsilon_closure
+
 
 # Example 1
 nfa_transitions_1 = {
@@ -161,3 +205,4 @@ for state, transitions in dfa_transitions_2.items():
     print(f"{state}: {transitions}")
 print("Example 2 - DFA Initial State:", dfa_initial_state_2)
 print("Example 2 - DFA Final States:", dfa_final_states_2)
+
